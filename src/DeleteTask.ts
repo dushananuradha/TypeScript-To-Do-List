@@ -1,11 +1,12 @@
 /**
- * Search a tak by ID and then delete it
+ * Search a task by ID and then delete it
  */
 
 
 import { toDoList } from "./AddNewTask";
 import { Task } from "./Types";
 
+let updatedToDoList: Task[] = [];
 
 function deleteTaskByID(taskID: number): Task[] | undefined {
     const taskIndex: number = toDoList.findIndex(task => task.id === taskID);
@@ -18,8 +19,8 @@ function deleteTaskByID(taskID: number): Task[] | undefined {
     const deletedTask: Task = toDoList.splice(taskIndex, 1)[0];
     console.log(`Deleted task "${deletedTask.name}" with had ID ${taskID} \n`);
 
-    const updatedToDoList: Task[] = reorderTasks(toDoList);
-    console.log(updatedToDoList);
+    updatedToDoList = reorderTasks(toDoList);
+    console.log(updatedToDoList, "\n----------------------------------------------------");
     return updatedToDoList; // Return updated list
 }
 
@@ -31,5 +32,10 @@ function reorderTasks(tasks: Task[]): Task[] {
     )
 }
 
+function getUpdatedToDoList(): Task[] {
+    return updatedToDoList;
+}
 
-export { deleteTaskByID };
+
+
+export { deleteTaskByID, reorderTasks, getUpdatedToDoList};

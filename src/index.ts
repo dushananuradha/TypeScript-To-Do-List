@@ -8,6 +8,7 @@ import { addNewTaskToDo, toDoList } from "./AddNewTask";
 import { Task } from "./Types";
 import { getTaskByID, updateTaskStatus } from "./ChangeTaskStatus";
 import { deleteTaskByID } from "./DeleteTask";
+import { filterTasksByStatus } from "./FilterTask";
 
 
 function displayToDoList(): void {
@@ -54,4 +55,7 @@ displayToDoList();
 
 getTaskIndex('Read Book');
 
-deleteTaskByID(3)
+deleteTaskByID(3);
+
+filterTasksByStatus("Completed");
+filterTasksByStatus("Pending");
