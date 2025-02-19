@@ -4,19 +4,14 @@
  * view To-do list[]
  */
 
-import { addNewTaskToDo, toDoList } from "./AddNewTask";
+// import { addNewTaskToDo, displayToDoList, getTaskIndex, toDoList } from "./AddNewTask";
 import { Task } from "./Types";
-import { getTaskByID, updateTaskStatus } from "./ChangeTaskStatus";
-import { deleteTaskByID } from "./DeleteTask";
-import { filterTasksByStatus } from "./FilterTask";
-
-
-function displayToDoList(): void {
-    // toDoList.forEach((task) => {
-    //     console.log(task, "\n----------------------------------------------------");
-    // })
-    console.log(toDoList, "\n----------------------------------------------------");
-}
+// import { getTaskByID, getTaskByName, updateTaskStatus } from "./ChangeTaskStatus";
+// import { deleteTaskByID, getUpdatedToDoList } from "./DeleteTask";
+// import { filterTasksByStatus } from "./FilterTask";
+import { TaskManager } from "./TaskManager";
+import { AddNewTask } from "./AddNewTask";
+import { ChangeTaskInfo } from "./ChangeTaskInfo";
 
 
 let newTask: Omit<Task, "id"> = {
@@ -35,27 +30,35 @@ let newTask4: Omit<Task, "id"> = {
     name: "Code Practice", status: "Pending"
 }
 
-function getTaskIndex(taskName: String): number {
-    const index: number = toDoList.findIndex(task => task.name === 'Do Uber Eats');
-    console.log(`Task \"${taskName}\" index: ${index} \n----------------------------------------------------`);
-    return index;
+let newTask5: Omit<Task, "id"> = {
+    name: "Playing Guitar", status: "Pending"
 }
 
 
-addNewTaskToDo(newTask);
-addNewTaskToDo(newTask2);
-addNewTaskToDo(newTask3);
-addNewTaskToDo(newTask4);
+const taskManager = TaskManager.getInstance(); 
+const taskAdd = new AddNewTask(taskManager);
+const taskEdit = new ChangeTaskInfo(taskManager);
 
-displayToDoList();
+taskAdd.addNewTask(newTask);
+taskAdd.addNewTask(newTask2);
+taskAdd.addNewTask(newTask3);
 
-updateTaskStatus(getTaskByID(1), "Completed");
+taskManager.getToDoList();
 
-displayToDoList();
+taskAdd.addNewTask(newTask4);
+taskAdd.addNewTask(newTask5);
+taskManager.getToDoList();
 
-getTaskIndex('Read Book');
+taskEdit.updateTaskName(30, "Uber Eats Lunch and Dinner Times");
+taskManager.getToDoList();
 
-deleteTaskByID(3);
+const multipleTasksStatus: Omit<Task, "name"> [] = [
+    {id: 1, status: "In Progress"},
+    {id: 3, status: "Completed"},
+    {id: 5, status: "Postponed"}
+]
+taskEdit.updateTaskStatus(4, "In Progress");
+taskManager.getToDoList();
 
-filterTasksByStatus("Completed");
-filterTasksByStatus("Pending");
+taskEdit.updateMultipleTasksStatus(multipleTasksStatus);
+taskManager.getToDoList();

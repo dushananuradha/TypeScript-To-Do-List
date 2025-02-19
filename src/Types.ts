@@ -1,6 +1,6 @@
 interface Task {
-    id: number,
-    name: string,
+   readonly id: number,
+    name: String,
     status: Status
 }
 
